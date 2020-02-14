@@ -5,47 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.spinner;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.Spinner;
 
-public class SpinColor extends CommandBase {
-  private Spinner spinner;
-  private String targetColor;
+public class SpinWheel extends CommandBase {
+  boolean clockwise;
+  private static Spinner spinner;
 
-  /**
-   * Creates a new SpinColor.
-   */
-  public SpinColor(Spinner subsystem, String targetColor) {
-    addRequirements(subsystem);
+  public SpinWheel(Spinner subsystem, boolean isClockwise) {
+    clockwise = isClockwise;
     spinner = subsystem;
-    this.targetColor = targetColor;
+    addRequirements(subsystem);
   }
-
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    SmartDashboard.putString("target:", targetColor);
-    spinner.spinClockwise();
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    spinner.stop();
+    if (clockwise) {
+      spinner.spinClockwise();
+    } else {
+      spinner.spinCClockwise();
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (targetColor == spinner.getColor());
+    return true;
   }
 }

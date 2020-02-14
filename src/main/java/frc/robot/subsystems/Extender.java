@@ -12,21 +12,22 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Extendy extends SubsystemBase {
+public class Extender extends SubsystemBase {
   /**
-   * Creates a new Extendy.
+   * Creates a new Extender.
    */
   private final CANSparkMax leftSpin;
   private final CANSparkMax rightSpin;
 
-  public Extendy() {
+  public Extender() {
     leftSpin = new CANSparkMax(22, MotorType.kBrushless);
     rightSpin = new CANSparkMax(0, MotorType.kBrushless);
   }
-    public void extend() {
-      leftSpin.set(0.5);
-      rightSpin.set(0.5);
-    }
+
+  public void extend() {
+    leftSpin.set(0.5);
+    rightSpin.set(0.5);
+  }
 
   @Override
   public void periodic() {

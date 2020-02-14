@@ -5,36 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.subsystems.Spinner;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveSubsystem;
 
-public class SpinWheel extends CommandBase {
-  boolean clockwise;
-  private static Spinner spinner;
+public class ArcadeDrive extends CommandBase {
+  DriveSubsystem drive;
 
-  public SpinWheel(Spinner subsystem, boolean isClockwise) {
-    clockwise = isClockwise;
-    spinner = subsystem;
+  public ArcadeDrive(DriveSubsystem subsystem) {
+    drive = subsystem;
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    if (clockwise) {
-      Robot.m_spinner.spinClockwise();
-    }
-    else {
-      Robot.m_spinner.spinCClockwise();
-    }
+  public void execute() {
+    drive.arcadeDrive(RobotContainer.controller.getRawAxis(1), RobotContainer.controller.getRawAxis(0));
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
