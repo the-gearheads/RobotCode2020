@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
@@ -21,7 +21,7 @@ public class TankDrive extends CommandBase {
 
   @Override
   public void execute() {
-    drive.tankDrive(
+    drive.controller.rawTankDrive(
       RobotContainer.controller.getRawAxis(1), 
       RobotContainer.controller.getRawAxis(4)
     );
