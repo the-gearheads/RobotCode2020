@@ -35,8 +35,8 @@ public class Extend extends CommandBase {
     this.intake = intake;
     leftController = new PIDController(.75, 0, 0);
     rightController = new PIDController(.75, 0, 0);
-    leftController.setSetpoint(SETPOINT);
-    rightController.setSetpoint(SETPOINT);
+    leftController.setSetpoint(32.6);
+    rightController.setSetpoint(32.8);
     Logger.configureLoggingAndConfig(this, false);
   }
 
@@ -56,6 +56,7 @@ public class Extend extends CommandBase {
     right = MathUtil.clamp(right, 0, 9.5);
 
     intake.extend(left, right);
+    intake.setCoast();
   }
 
   // @Config
@@ -80,8 +81,12 @@ public class Extend extends CommandBase {
     if (intake.getLPosition() == 0 || intake.getRPosition() == 0) {
       return false; // rock solid logic baby
     }
-    return (Deadband.get(intake.getLPosition(), SETPOINT, 0.2) == 0)
-        && (Deadband.get(intake.getRPosition(), SETPOINT, 0.2) == 0)
-        || ((intake.getLPosition() > 33.5) || (intake.getRPosition() > 33.5));
+    if (intake.isJammed()) {
+      intake.setCoast();
+    }
+    return (intake.isJammed())
+        || (Deadband.get(intake.getLPosition(), 32.6, 0.2) == 0)
+            && (Deadband.get(intake.getRPosition(), 32.8, 0.2) == 0)
+        || ((intake.getLPosition() >= 32.85) || (intake.getRPosition() >= 33.09));
   }
 }

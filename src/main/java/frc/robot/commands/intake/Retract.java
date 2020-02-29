@@ -38,6 +38,7 @@ public class Retract extends CommandBase {
     leftController.setSetpoint(SETPOINT);
     rightController.setSetpoint(SETPOINT);
     Logger.configureLoggingAndConfig(this, false);
+    intake.setCoast();
   }
 
   // Called when the command is initially scheduled.
@@ -65,7 +66,16 @@ public class Retract extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Deadband.get(intake.getLPosition(), SETPOINT, .2) == 0) && (Deadband.get(intake.getRPosition(), SETPOINT, .2) == 0)
+    if (intake.isJammed()) {
+      intake.setCoast();
+    }
+    boolean exit = (intake.isJammed())
+        || (Deadband.get(intake.getLPosition(), SETPOINT, .2) == 0)
+            && (Deadband.get(intake.getRPosition(), SETPOINT, .2) == 0)
         || ((intake.getLPosition() < 0) || (intake.getRPosition() < 0));
+    if (exit && (!intake.isJammed())) {
+      intake.setBrake();
+    }
+    return exit;
   }
 }

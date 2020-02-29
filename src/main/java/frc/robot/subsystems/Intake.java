@@ -9,9 +9,12 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
+import frc.robot.util.Deadband;
 import io.github.oblarg.oblog.Logger;
 import io.github.oblarg.oblog.annotations.Log;
 
@@ -48,6 +51,7 @@ public class Intake extends SubsystemBase {
     rEncoder.setPosition(0);
 
     Logger.configureLoggingAndConfig(this, false);
+
   }
 
   public void extend(double left, double right) {
@@ -58,7 +62,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     debug0 = lExtension.getOutputCurrent();
-    debug1 = rExtension.getOutputCurrent();
+    debug1 = rExtension.getAppliedOutput();
     debug2 = lEncoder.getPosition();
     debug3 = rEncoder.getPosition();
   }
@@ -78,5 +82,20 @@ public class Intake extends SubsystemBase {
 
   public double getRPosition() {
     return rEncoder.getPosition();
+  }
+
+  @Log
+  public boolean isJammed() {
+    return (Deadband.get(lExtension.getAppliedOutput(), 0, 1.5) != 0) || (Deadband.get(rExtension.getAppliedOutput(), 0, 1.5) != 0);
+  }
+
+  public void setCoast() {
+    lExtension.setIdleMode(IdleMode.kCoast);
+    rExtension.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void setBrake() {
+    lExtension.setIdleMode(IdleMode.kBrake);
+    rExtension.setIdleMode(IdleMode.kBrake);
   }
 }
