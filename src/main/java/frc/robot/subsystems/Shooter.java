@@ -33,13 +33,13 @@ public class Shooter extends SubsystemBase {
   private final CANSparkMax lShooter;
   private final CANSparkMax angleMotor;
 
-  private final CANEncoder lShooterEncoder;
-  private final CANEncoder rShooterEncoder;
+  private CANEncoder lShooterEncoder;
+  private CANEncoder rShooterEncoder;
 
   private final CANSparkMax elevatorUpper;
   private final CANSparkMax elevatorLower;
-  private final CANEncoder upperEnc;
-  private final CANEncoder lowerEnc;
+  private CANEncoder upperEnc;
+  private CANEncoder lowerEnc;
 
   // private final AnalogInput irTop;
   private final AnalogInput irBottom;
@@ -52,8 +52,8 @@ public class Shooter extends SubsystemBase {
   private double upperSpeed;
   private double lowerSpeed;
 
-  private final Supplier<Double> leftVelocity;
-  private final Supplier<Double> rightVelocity;
+  private Supplier<Double> leftVelocity;
+  private Supplier<Double> rightVelocity;
 
   @Log
   private double shooterLeft;
@@ -89,17 +89,18 @@ public class Shooter extends SubsystemBase {
     angleMotor.setInverted(true);
     angleMotor.setIdleMode(IdleMode.kBrake);
 
-    lShooterEncoder = lShooter.getEncoder();
-    rShooterEncoder = rShooter.getEncoder();
+    //lShooterEncoder = lShooter.getEncoder();
+    //rShooterEncoder = rShooter.getEncoder();
 
-    leftVelocity = () -> lShooterEncoder.getVelocity() * ENCODER_CONSTANT;
-    rightVelocity = () -> rShooterEncoder.getVelocity() * ENCODER_CONSTANT;
+    //leftVelocity = //() -> lShooterEncoder.getVelocity() * ENCODER_CONSTANT;
+    //rightVelocity =//() -> rShooterEncoder.getVelocity() * ENCODER_CONSTANT;
+    
     avgVelocity = () -> getAvgVelocity();
 
     elevatorUpper = new CANSparkMax(15, MotorType.kBrushless);
     elevatorLower = new CANSparkMax(11, MotorType.kBrushless);
-    upperEnc = elevatorUpper.getEncoder();
-    lowerEnc = elevatorLower.getEncoder();
+    //upperEnc = elevatorUpper.getEncoder();
+    //lowerEnc = elevatorLower.getEncoder();
     elevatorLower.setInverted(true);
 
     feedforward = Constants.shooterFF;
@@ -158,8 +159,8 @@ public class Shooter extends SubsystemBase {
     } else {
       bottomPrimed = true;
     }
-    shooterLeft = leftVelocity.get();
-    shooterRight = rightVelocity.get();
+    shooterLeft = 0;//leftVelocity.get();
+    shooterRight = 0;//rightVelocity.get();
     anglePosition = getAnglePosition();
     debug1 = lShooter.getOutputCurrent();
     // debug1 = pot.getVoltage();

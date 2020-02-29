@@ -33,6 +33,6 @@ public class Lidar {
 
         byte buffer[] = new byte[2];
         this.lidar.read(0x8F, 2, buffer);
-        return (buffer[1] << 8) | buffer[0];
+        return (buffer[0] << 8) + buffer[1];
     }
 }

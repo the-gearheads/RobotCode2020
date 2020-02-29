@@ -40,6 +40,7 @@ import frc.robot.commands.spinner.SpinRotations;
 import frc.robot.subsystems.Arms;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ReadLidar;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Spinner;
 import frc.robot.util.JoystickTrigger;
@@ -58,6 +59,7 @@ public class RobotContainer {
   private static Spinner spinner;
   private static Intake intake;
   private static Arms arms;
+  private static ReadLidar reader;
 
   // Misc
   private final NetworkTableEntry cameraAngle;
@@ -68,6 +70,7 @@ public class RobotContainer {
     spinner = new Spinner();
     intake = new Intake();
     arms = new Arms();
+    reader = new ReadLidar();
 
     controller = new XboxController(Constants.CONTROLLER_PORT);
     streamdeck = new StreamDeck(0, 15);

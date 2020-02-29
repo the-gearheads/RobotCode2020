@@ -26,8 +26,8 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax rExtension;
   private final CANSparkMax intake;
 
-  private final CANEncoder lEncoder;
-  private final CANEncoder rEncoder;
+  private CANEncoder lEncoder;
+  private CANEncoder rEncoder;
 
   @Log
   private double debug0;
@@ -45,10 +45,10 @@ public class Intake extends SubsystemBase {
     rExtension.setInverted(true);
 
     intake = new CANSparkMax(28, MotorType.kBrushless);
-    lEncoder = lExtension.getEncoder();
-    rEncoder = rExtension.getEncoder();
-    lEncoder.setPosition(0);
-    rEncoder.setPosition(0);
+    //lEncoder = lExtension.getEncoder();
+    //rEncoder = rExtension.getEncoder();
+    //lEncoder.setPosition(0);
+    //rEncoder.setPosition(0);
 
     Logger.configureLoggingAndConfig(this, false);
 
@@ -63,8 +63,8 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     debug0 = lExtension.getOutputCurrent();
     debug1 = rExtension.getAppliedOutput();
-    debug2 = lEncoder.getPosition();
-    debug3 = rEncoder.getPosition();
+    debug2 = 0;//lEncoder.getPosition();
+    debug3 = 0;//rEncoder.getPosition();
   }
 
   public void intake(double speed) {
