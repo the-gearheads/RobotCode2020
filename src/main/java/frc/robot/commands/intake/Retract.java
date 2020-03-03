@@ -38,7 +38,6 @@ public class Retract extends CommandBase {
     leftController.setSetpoint(SETPOINT);
     rightController.setSetpoint(SETPOINT);
     Logger.configureLoggingAndConfig(this, false);
-    intake.setCoast();
   }
 
   // Called when the command is initially scheduled.

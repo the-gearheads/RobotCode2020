@@ -25,6 +25,12 @@ public class Extend extends CommandBase {
   @Log
   private PIDController rightController;
   private final double SETPOINT = 32.5;
+  @Log
+  private boolean debug0;
+  @Log
+  private boolean debug1;
+  @Log
+  private boolean debug2;
 
   /**
    * Creates a new Intake.
@@ -35,8 +41,8 @@ public class Extend extends CommandBase {
     this.intake = intake;
     leftController = new PIDController(.75, 0, 0);
     rightController = new PIDController(.75, 0, 0);
-    leftController.setSetpoint(32.6);
-    rightController.setSetpoint(32.8);
+    leftController.setSetpoint(33);
+    rightController.setSetpoint(33.2);
     Logger.configureLoggingAndConfig(this, false);
   }
 
@@ -56,7 +62,7 @@ public class Extend extends CommandBase {
     right = MathUtil.clamp(right, 0, 9.5);
 
     intake.extend(left, right);
-    intake.setCoast();
+    // intake.setCoast();
   }
 
   // @Config

@@ -40,7 +40,7 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     lExtension = new CANSparkMax(6, MotorType.kBrushless);
-    rExtension = new CANSparkMax(30, MotorType.kBrushless);
+    rExtension = new CANSparkMax(27, MotorType.kBrushless);
     lExtension.setInverted(true);
     rExtension.setInverted(true);
 
@@ -50,8 +50,8 @@ public class Intake extends SubsystemBase {
     lEncoder.setPosition(0);
     rEncoder.setPosition(0);
 
+    setBrake();
     Logger.configureLoggingAndConfig(this, false);
-
   }
 
   public void extend(double left, double right) {
